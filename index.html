@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url('cake-background.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            color: #fff;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 6px rgba(226, 5, 5, 0.5);
+        }
+
+        .slider-container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            height: 400px;
+            margin: 20px auto;
+            overflow: hidden;
+            border: 4px solid #fff;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 1.5s ease-in-out;
+        }
+
+        .slides img {
+            width: 100%;
+            flex-shrink: 0;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .cake {
+            position: absolute;
+            bottom: 5%;
+            width: 150px;
+            z-index: 10;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            animation: fall 3s infinite ease-in-out;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: #ff6f61;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+            z-index: 10;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff856c;
+        }
+
+        /* Lời chúc nổi lên */
+        .message {
+            font-size: 2rem;
+            margin-top: 20px;
+            color: #ffeb3b;
+            font-weight: bold;
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 20;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+        }
+
+        .message.show {
+            opacity: 1;
+        }
+
+        /* Media query cho thiết bị di động */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .slider-container {
+                width: 90%;
+                height: 250px;
+            }
+
+            .cake {
+                width: 120px;
+            }
+
+            .message {
+                font-size: 1.5rem;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy Birthday Hải Đăng!</h1>
+
+    <div class="slider-container">
+        <div class="slides" id="slides">
+            <img src="f.jpg" alt="Slide 1">
+            <img src="a.jpg" alt="Slide 2">
+            <img src="b.jpg" alt="Slide 3">
+            <img src="c.jpg" alt="Slide 4">
+            <img src="d.jpg" alt="Slide 5">
+            <img src="e.jpg" alt="Slide 6">
+        </div>
+    </div>
+
+    <img class="cake" src="cake.webp" alt="Birthday Cake">
+
+    <button onclick="showConfetti(); showMessage()">Click me!</button>
+
+    <p class="message" id="birthdayMessage">Chúc mừng sinh nhật Hải Đăng.Tuổi mới vui vẻ, mọi điều tốt đẹp đến với ní.</p>
+
+    <script>
+        const slides = document.getElementById('slides');
+        let index = 0;
+
+        function showNextSlide() {
+            index = (index + 1) % slides.children.length;
+            slides.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        setInterval(showNextSlide, 4000);
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.classList.add('confetti');
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDuration = Math.random() * 2 + 3 + 's';
+            confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 70%)`;
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+
+        function showConfetti() {
+            for (let i = 0; i < 150; i++) {
+                setTimeout(createConfetti, i * 30);
+            }
+        }
+
+        function showMessage() {
+            const message = document.getElementById('birthdayMessage');
+            message.classList.add('show');
+        }
+    </script>
+</body>
+</html>
